@@ -12,32 +12,22 @@
       self.shootSound.load();
     });
 
-
-    console.log(invaderImage);
-
     var tick = function() {
       self.update();
       self.draw(screen, gameSize);
-      // http://creativejs.com/resources/requestanimationframe/
       requestAnimationFrame(tick);
     };
-
-
 
     var everythingLoaded = setInterval(function() {
       if (/loaded|complete/.test(document.readyState)) {
         clearInterval(everythingLoaded);
-
         tick();
-        console.log('loaded');
       }
     }, 10);
 
   };
 
   Game.prototype = {
-    // assigning a function as a property of an object literal
-    // http://stackoverflow.com/questions/9384865/javascript-colon-for-labeling-annonymous-functions
     update: function() {
       var bodies = this.bodies;
       var notCollidingWithAnything = function(body1) {
@@ -109,19 +99,11 @@
                        body.center.y - body.size.y / 2,
                        body.size.x, body.size.y);
     } else {
+      screen.fillStyle = '#fff';
       screen.fillRect( body.center.x - body.size.x / 2,
                        body.center.y - body.size.y / 2,
                        body.size.x, body.size.y);
     }
-  };
-
-
-  var drawRect = function(screen, body) {
-    // screen.drawImage(invaderImage,
-    screen.fillRect(
-                     body.center.x - body.size.x / 2,
-                     body.center.y - body.size.y / 2,
-                     body.size.x, body.size.y);
   };
 
   var Bullet = function(center, velocity) {
@@ -175,7 +157,6 @@
   };
 
   var colliding = function(body1, body2) {
-    // if any conditions are true, bodies are NOT collding
     return !(body1 === body2 ||
              body1.center.x + body1.size.x / 2 < body2.center.x - body2.size.x / 2 ||
              body1.center.y + body1.size.y / 2 < body2.center.y - body2.size.y / 2 ||
@@ -195,7 +176,7 @@
   };
 
   var playerImage = new Image();
-  playerImage.src = 'images/player.png';
+  playerImage.src = 'images/player.gif';
 
   var invaderImage = new Image();
   invaderImage.src = 'images/invader.gif';
@@ -215,11 +196,7 @@
       return keyState[keyCode] === true;
     };
 
-    this.KEYS = {
-      LEFT: 37,
-      RIGHT: 39,
-      SPACE: 32
-    };
+    this.KEYS = { LEFT: 37, RIGHT: 39, SPACE: 32 };
   };
 
   window.onload = function() {

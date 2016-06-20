@@ -1,0 +1,18 @@
+#screen {
+  border: white solid 1px;
+}
+
+body {
+  text-align: center;
+  color: white;
+  background-color: black;
+}
+
+h1 {
+  font-family: 'Press Start 2P', cursive;
+}
+
+p {
+  font-size: 120%;
+  font-family: 'Unica One', cursive;
+}
