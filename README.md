@@ -21,3 +21,4 @@ Use a static server like http-server or just open the index.html in the browser 
 ## Resources
 
 * [Mary live-codes a JavaScript game...](https://vimeo.com/105955605)
+* [Everything Loaded With JavaScript](http://callmenick.com/post/check-if-everything-loaded-with-javascript)

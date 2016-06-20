@@ -9,16 +9,29 @@
     var self = this;
     loadSound('sounds/pewpew.wav', function(shootSound) {
       self.shootSound = shootSound;
-
-      var tick = function() {
-        self.update();
-        self.draw(screen, gameSize);
-        // http://creativejs.com/resources/requestanimationframe/
-        requestAnimationFrame(tick);
-      };
-
-      tick();
+      self.shootSound.load();
     });
+
+
+    console.log(invaderImage);
+
+    var tick = function() {
+      self.update();
+      self.draw(screen, gameSize);
+      // http://creativejs.com/resources/requestanimationframe/
+      requestAnimationFrame(tick);
+    };
+
+
+
+    var everythingLoaded = setInterval(function() {
+      if (/loaded|complete/.test(document.readyState)) {
+        clearInterval(everythingLoaded);
+
+        tick();
+        console.log('loaded');
+      }
+    }, 10);
 
   };
 
@@ -40,8 +53,9 @@
 
     draw: function(screen, gameSize) {
       screen.clearRect(0, 0, gameSize.x, gameSize.y);
+
       for (var i = 0; i < this.bodies.length; i++) {
-        drawRect(screen, this.bodies[i]);
+        drawBody(screen, this.bodies[i]);
       };
     },
 
@@ -78,16 +92,36 @@
                                   y: this.center.y - this.size.x / 2 },
                                   { x: 0, y: -6 });
         this.game.addBody(bullet);
-        this.game.shootSound.load();
         this.game.shootSound.play();
       }
     }
   };
 
+  var drawBody = function(screen, body) {
+    if (body instanceof Player) {
+      screen.drawImage(playerImage,
+                       body.center.x - body.size.x / 2,
+                       body.center.y - body.size.y / 2,
+                       body.size.x, body.size.y);
+    } else if (body instanceof Invader) {
+       screen.drawImage(invaderImage,
+                       body.center.x - body.size.x / 2,
+                       body.center.y - body.size.y / 2,
+                       body.size.x, body.size.y);
+    } else {
+      screen.fillRect( body.center.x - body.size.x / 2,
+                       body.center.y - body.size.y / 2,
+                       body.size.x, body.size.y);
+    }
+  };
+
+
   var drawRect = function(screen, body) {
-    screen.fillRect(body.center.x - body.size.x / 2,
-                    body.center.y - body.size.y / 2,
-                    body.size.x, body.size.y);
+    // screen.drawImage(invaderImage,
+    screen.fillRect(
+                     body.center.x - body.size.x / 2,
+                     body.center.y - body.size.y / 2,
+                     body.size.x, body.size.y);
   };
 
   var Bullet = function(center, velocity) {
@@ -159,6 +193,12 @@
     sound.addEventListener('canplaythrough', loaded);
     sound.load();
   };
+
+  var playerImage = new Image();
+  playerImage.src = 'images/player.png';
+
+  var invaderImage = new Image();
+  invaderImage.src = 'images/invader.gif';
 
   var Keyboarder = function() {
     var keyState = {};
