@@ -27,6 +27,7 @@
     },
 
     draw: function(screen, gameSize) {
+      screen.clearRect(0, 0, gameSize.x, gameSize.y);    
       for (var i = 0; i < this.bodies.length; i++) {
         drawRect(screen, this.bodies[i]);
       };
