@@ -7,7 +7,7 @@
     this.bodies = createInvaders(this).concat(new Player(this, gameSize));
 
     var self = this;
-    loadSound('sounds/pewpew.wav', function(shootSound) {
+    loadSound('assetts/pewpew.wav', function(shootSound) {
       self.shootSound = shootSound;
       self.shootSound.load();
     });
@@ -176,10 +176,10 @@
   };
 
   var playerImage = new Image();
-  playerImage.src = 'images/player.gif';
+  playerImage.src = 'assetts/player.gif';
 
   var invaderImage = new Image();
-  invaderImage.src = 'images/invader.gif';
+  invaderImage.src = 'assetts/invader.gif';
 
   var Keyboarder = function() {
     var keyState = {};
