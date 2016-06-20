@@ -42,6 +42,14 @@
 
     addBody: function(body) {
         this.bodies.push(body);
+    },
+
+    invadersBelow: function(invader) {
+      return this.bodies.filter(function(body) {
+        return body instanceof Invader &&
+          body.center.y > invader.center.y &&
+          body.center.x - invader.center.x < invader.size.x;
+      }).length > 0;
     }
   };
 
@@ -62,8 +70,8 @@
 
       if (this.keyboarder.isDown(this.keyboarder.KEYS.SPACE)) {
         var bullet = new Bullet({ x: this.center.x,
-                                 y: this.center.y - this.size.x / 2 },
-                              { x: 0, y: -6 });
+                                  y: this.center.y - this.size.x / 2 },
+                                  { x: 0, y: -6 });
         this.game.addBody(bullet);
       }
     }
@@ -104,6 +112,13 @@
 
       this.center.x += this.speedX;
       this.patrolX += this.speedX;
+
+      if (Math.random() > 0.995 && !this.game.invadersBelow(this)) {
+        var bullet = new Bullet({ x: this.center.x,
+                                  y: this.center.y + this.size.x / 2 },
+                                  { x: Math.random() - 0.5, y: 2 });
+        this.game.addBody(bullet);
+      }
     }
   };
 
