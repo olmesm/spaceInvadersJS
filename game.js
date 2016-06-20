@@ -47,6 +47,18 @@
                     body.size.x, body.size.y);
   };
 
+  var Keyboarder = function() {
+    var keyState = {};
+
+    window.onkeydown = function(event) {
+      keyState[event.keyCode] = true;
+    };
+
+    window.onkeyup = function(event) {
+      keyState[event.keyCode] = false;
+    };
+  };
+
   window.onload = function() {
     new Game('screen');
   };
