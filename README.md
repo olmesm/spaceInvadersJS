@@ -15,7 +15,7 @@ $ git clone https://github.com/olmesm/spaceInvadersJS
 Either use a static server like http-server or just open the index.html in the browser of your choice.
 
 ### Online
-[coming soon](#)
+[Space Invaders on Surge](http://space-invaders.surge.sh/)
 
 ***
 
