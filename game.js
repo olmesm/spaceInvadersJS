@@ -21,6 +21,13 @@
     // assigning a function as a property of an object literal
     // http://stackoverflow.com/questions/9384865/javascript-colon-for-labeling-annonymous-functions
     update: function() {
+      var bodies = this.bodies;
+      var notCollidingWithAnything = function(body1) {
+        return bodies.filter(function(body2) { return colliding(body1, body2); }).length === 0;
+      };
+
+      this.bodies = this.bodies.filter(notCollidingWithAnything);
+
       for (var i = 0; i < this.bodies.length; i++) {
         this.bodies[i].update();
       };
@@ -109,6 +116,15 @@
     }
 
     return invaders;
+  };
+
+  var colliding = function(body1, body2) {
+    // if any conditions are true, bodies are NOT collding
+    return !(body1 === body2 ||
+             body1.center.x + body1.size.x / 2 < body2.center.x - body2.size.x / 2 ||
+             body1.center.y + body1.size.y / 2 < body2.center.y - body2.size.y / 2 ||
+             body1.center.x - body1.size.x / 2 > body2.center.x + body2.size.x / 2 ||
+             body1.center.y - body1.size.y / 2 > body2.center.y + body2.size.y / 2);
   };
 
   var Keyboarder = function() {
