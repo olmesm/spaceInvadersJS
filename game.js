@@ -7,14 +7,18 @@
     this.bodies = createInvaders(this).concat(new Player(this, gameSize));
 
     var self = this;
-    var tick = function() {
-      self.update();
-      self.draw(screen, gameSize);
-      // http://creativejs.com/resources/requestanimationframe/
-      requestAnimationFrame(tick);
-    };
+    loadSound('sounds/shoot.wav', function(shootSound) {
+      self.shootSound = shootSound;
+      var tick = function() {
+        self.update();
+        self.draw(screen, gameSize);
+        // http://creativejs.com/resources/requestanimationframe/
+        requestAnimationFrame(tick);
+      };
 
-    tick();
+      tick();
+    });
+
   };
 
   Game.prototype = {
@@ -73,6 +77,8 @@
                                   y: this.center.y - this.size.x / 2 },
                                   { x: 0, y: -6 });
         this.game.addBody(bullet);
+        this.game.shootSound.load();
+        this.game.shootSound.play();
       }
     }
   };
@@ -140,6 +146,17 @@
              body1.center.y + body1.size.y / 2 < body2.center.y - body2.size.y / 2 ||
              body1.center.x - body1.size.x / 2 > body2.center.x + body2.size.x / 2 ||
              body1.center.y - body1.size.y / 2 > body2.center.y + body2.size.y / 2);
+  };
+
+  var loadSound = function(url, callback) {
+    var loaded = function() {
+      callback(sound);
+      sound.removeEventListener('canplaythrough', loaded);
+    };
+
+    var sound = new Audio(url);
+    sound.addEventListener('canplaythrough', loaded);
+    sound.load();
   };
 
   var Keyboarder = function() {
